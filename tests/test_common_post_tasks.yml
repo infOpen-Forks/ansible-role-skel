@@ -1,0 +1,4 @@
+- name: 'Add second user once skel deployed'
+  become: True
+  user:
+    name: 'bar'
