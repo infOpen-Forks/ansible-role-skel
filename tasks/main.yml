@@ -2,3 +2,70 @@
 
 # Main tasks file for skel role
 
+- name: 'Manage skels element to be removed'
+  become: True
+  file:
+    path: "{{ item.1.path }}"
+    state: 'absent'
+  with_subelements:
+    - "{{ skel_entries }}"
+    - 'to_remove'
+    - skip_missing: True
+
+
+- name: 'Manage skels directories'
+  become: True
+  file:
+    path: "{{ item.1.path }}"
+    state: "{{ item.1.state | default('directory') }}"
+    owner: "{{ item.1.owner | default(skel_default_owner) }}"
+    group: "{{ item.1.group | default(skel_default_group) }}"
+    mode: "{{ item.1.mode | default(skel_default_directory_mode) }}"
+  with_subelements:
+    - "{{ skel_entries }}"
+    - 'directories'
+    - skip_missing: True
+
+
+- name: 'Manage skels links'
+  become: True
+  file:
+    src: "{{ item.1.src }}"
+    dest: "{{ item.1.dest }}"
+    state: "{{ item.1.state | default(skel_default_link_state)}}"
+    owner: "{{ item.1.owner | default(skel_default_owner) }}"
+    group: "{{ item.1.group | default(skel_default_group) }}"
+    mode: "{{ item.1.mode | default(skel_default_link_mode) }}"
+    force: "{{ item.1.force | default(skel_default_link_force) }}"
+  with_subelements:
+    - "{{ skel_entries }}"
+    - 'links'
+    - skip_missing: True
+
+
+- name: 'Manage skels files to copy'
+  become: True
+  copy:
+    src: "{{ item.1.src }}"
+    dest: "{{ item.1.dest }}"
+    owner: "{{ item.1.owner | default(skel_default_owner) }}"
+    group: "{{ item.1.group | default(skel_default_group) }}"
+    mode: "{{ item.1.mode | default(skel_default_file_mode) }}"
+  with_subelements:
+    - "{{ skel_entries }}"
+    - 'to_copy'
+    - skip_missing: True
+
+
+- name: 'Manage skels files to template'
+  become: True
+  template:
+    src: "{{ item.1.src }}"
+    dest: "{{ item.1.dest }}"
+    owner: "{{ item.1.owner | default(skel_default_owner) }}"
+    group: "{{ item.1.group | default(skel_default_group) }}"
+    mode: "{{ item.1.mode | default(skel_default_file_mode) }}"
+  with_subelements:
+    - "{{ skel_entries }}"
+    - 'to_template'
+    - skip_missing: True
