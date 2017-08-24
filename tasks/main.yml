@@ -2,6 +2,13 @@
 
 # Main tasks file for skel role
 
+- name: 'INIT | Manage variables to use for our target'
+  include: "{{ role_path }}/tasks/manage_variables.yml"
+  tags:
+    - 'role::skel'
+    - 'role::skel::init'
+
+
 - name: 'Manage skels element to be removed'
   become: True
   file:
