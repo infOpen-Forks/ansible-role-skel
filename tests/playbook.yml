@@ -17,7 +17,17 @@
 
 
 - hosts: 'all'
+  pre_tasks:
+    - name: 'Add first user before skel deployment'
+      become: True
+      user:
+        name: 'foo'
   roles:
     - role: "{{ role_name }}"
+  post_tasks:
+    - name: 'Add second user once skel deployed'
+      become: True
+      user:
+        name: 'bar'
   vars:
     role_name: "{{ playbook_dir | basename }}"
