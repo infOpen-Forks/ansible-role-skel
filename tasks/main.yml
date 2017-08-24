@@ -2,6 +2,13 @@
 
 # Main tasks file for skel role
 
+- name: 'INIT | Manage variables to use for our target'
+  include: "{{ role_path }}/tasks/manage_variables.yml"
+  tags:
+    - 'role::skel'
+    - 'role::skel::init'
+
+
 - name: 'Manage skels element to be removed'
   become: True
   file:
@@ -11,6 +18,9 @@
     - "{{ skel_entries }}"
     - 'to_remove'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::remove'
 
 
 - name: 'Manage skels directories'
@@ -25,6 +35,9 @@
     - "{{ skel_entries }}"
     - 'directories'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::folders'
 
 
 - name: 'Manage skels links'
@@ -41,6 +54,9 @@
     - "{{ skel_entries }}"
     - 'links'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::links'
 
 
 - name: 'Manage skels files to copy'
@@ -55,6 +71,9 @@
     - "{{ skel_entries }}"
     - 'to_copy'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::copy'
 
 
 - name: 'Manage skels files to template'
@@ -69,3 +88,6 @@
     - "{{ skel_entries }}"
     - 'to_template'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::templates'

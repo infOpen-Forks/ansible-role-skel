@@ -1,4 +1,0 @@
-- name: 'Add first user before skel deployment'
-  become: True
-  user:
-    name: 'foo'
