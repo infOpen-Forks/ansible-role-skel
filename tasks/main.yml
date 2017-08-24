@@ -18,6 +18,9 @@
     - "{{ skel_entries }}"
     - 'to_remove'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::remove'
 
 
 - name: 'Manage skels directories'
@@ -32,6 +35,9 @@
     - "{{ skel_entries }}"
     - 'directories'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::folders'
 
 
 - name: 'Manage skels links'
@@ -48,6 +54,9 @@
     - "{{ skel_entries }}"
     - 'links'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::links'
 
 
 - name: 'Manage skels files to copy'
@@ -62,6 +71,9 @@
     - "{{ skel_entries }}"
     - 'to_copy'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::copy'
 
 
 - name: 'Manage skels files to template'
@@ -76,3 +88,6 @@
     - "{{ skel_entries }}"
     - 'to_template'
     - skip_missing: True
+  tags:
+    - 'role::skel'
+    - 'role::skel::templates'
