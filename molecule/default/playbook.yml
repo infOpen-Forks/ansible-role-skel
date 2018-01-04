@@ -2,8 +2,8 @@
 
 # Role tests
 
-- hosts: 'skel-vagrant-xenial64:skel-docker-xenial'
-  name: 'Install tests prerequisites'
+- name: 'Converge | Prerequisites tasks'
+  hosts: 'skel-docker-xenial'
   gather_facts: False
   tasks:
     - name: 'PREREQUISITES | APT | Do an apt-get update'
@@ -16,18 +16,17 @@
       changed_when: False
 
 
-- hosts: 'all'
+- name: 'Converge | Main tasks'
+  hosts: 'all'
   pre_tasks:
     - name: 'Add first user before skel deployment'
       become: True
       user:
         name: 'foo'
   roles:
-    - role: "{{ role_name }}"
+    - role: "ansible-role-skel"
   post_tasks:
     - name: 'Add second user once skel deployed'
       become: True
       user:
         name: 'bar'
-  vars:
-    role_name: "{{ playbook_dir | basename }}"
