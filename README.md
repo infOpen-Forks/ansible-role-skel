@@ -1,8 +1,12 @@
 # skel
 
-[![Build Status](https://travis-ci.org/Temelio/ansible-role-skel.svg?branch=master)](https://travis-ci.org/Temelio/ansible-role-skel)
+[![Build Status](https://img.shields.io/travis/Temelio/ansible-role-skel/master.svg?label=travis_master)](https://travis-ci.org/Temelio/ansible-role-skel)
+[![Build Status](https://img.shields.io/travis/Temelio/ansible-role-skel/develop.svg?label=travis_develop)](https://travis-ci.org/Temelio/ansible-role-skel)
+[![Updates](https://pyup.io/repos/github/Temelio/ansible-role-skel/shield.svg)](https://pyup.io/repos/github/Temelio/ansible-role-skel/)
+[![Python 3](https://pyup.io/repos/github/Temelio/ansible-role-skel/python-3-shield.svg)](https://pyup.io/repos/github/Temelio/ansible-role-skel/)
+[![Ansible Role](https://img.shields.io/ansible/role/9929.svg)](https://galaxy.ansible.com/Temelio/skel/)
 
-Install skel package.
+Manage the skeleton structures used with account creation
 
 ## Requirements
 
