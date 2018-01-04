@@ -1,0 +1,63 @@
+---
+
+dependency:
+  name: 'galaxy'
+driver:
+  name: 'docker'
+lint:
+  name: 'yamllint'
+platforms:
+  - name: "skel-docker-jessie"
+    image: 'minimum2scp/systemd-jessie:latest'
+    command: '/sbin/init'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+  - name: "skel-docker-xenial"
+    image: 'solita/ubuntu-systemd:16.04'
+    command: '/sbin/init'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+  - name: "skel-docker-trusty"
+    image: 'ubuntu:trusty'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+provisioner:
+  name: 'ansible'
+  lint:
+    name: 'ansible-lint'
+  inventory:
+    group_vars:
+      all:
+        skel_entries:
+          - directories:
+              - path: '/etc/skel/.ssh'
+                mode: '0700'
+            to_remove:
+              - path: '/etc/skel/.bashrc'
+          - directories:
+              - path: '/etc/skel/foo'
+              - path: '/etc/skel/bar'
+                mode: '0755'
+            links:
+              - src: '/etc/skel/foo'
+                dest: '/etc/skel/bar/foolink'
+            to_copy:
+              - src: "{{ role_path }}/tests/files/foo.txt"
+                dest: '/etc/skel/bar/'
+            to_template:
+              - src: "{{ role_path }}/tests/files/bar.j2"
+                dest: '/etc/skel/bar/bar.txt'
+    host_vars: {}
+scenario:
+  name: 'default'
+verifier:
+  name: 'testinfra'
+  additional_files_or_dirs:
+    - '../../tests'
+  lint:
+    name: 'flake8'
+  options:
+    sudo: True
